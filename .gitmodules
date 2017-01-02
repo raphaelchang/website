@@ -1,0 +1,6 @@
+[submodule "schedulepoll"]
+	path = schedulepoll
+	url = https://github.com/raphaelchang/schedulepoll
+[submodule "studybuddy"]
+	path = studybuddy
+	url = https://github.com/raphaelchang/studybuddy

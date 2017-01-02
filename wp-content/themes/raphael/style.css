@@ -1,0 +1,352 @@
+@font-face {
+    font-family: raleway;
+    src: url(Raleway-Bold.ttf);
+	font-weight: bold;
+}
+
+@font-face {
+    font-family: raleway;
+    src: url(Raleway-Medium.ttf);
+}
+
+@font-face {
+    font-family: dosis;
+    src: url(Dosis-Bold.ttf);
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: dosis;
+    src: url(Dosis-Medium.ttf);
+}
+
+@font-face {
+    font-family: slabo;
+    src: url(Slabo27px-Regular.ttf);
+}
+
+#wrapper
+{
+    margin: auto;
+    padding: 0;
+}
+
+#main
+{
+    background-color: #fff;
+}
+
+#container
+{
+	width: 830px;
+	margin: auto;
+	padding: 10px;
+}
+
+#content
+{
+	min-height: 300px;
+	padding: 0 5px;
+    text-align: center;
+}
+
+html, body {
+	height: 100%;
+    margin: 0;
+}
+
+html, body, td, select {
+	font-family:"Slabo", Helvetica,Arial;
+	font-size:20px;
+	font-weight:normal;
+	line-height:30px;
+}
+
+.entry-title
+{
+    text-align: center;
+}
+
+h1, h2, h3
+{
+	font-family:"Dosis","Trebuchet MS",Helvetica,Arial;
+}
+
+h2, h3
+{
+	margin-bottom: 10px;
+}
+
+h4.project-sub
+{
+    margin: 0;
+    font-size: 18pt;
+    color: #aaa;
+}
+
+hr
+{
+	border: 0;
+	border-bottom: 1px solid;
+    border-color: #08b;
+}
+
+a
+{
+    color: #08b;
+    text-decoration: none;
+}
+
+a:hover
+{
+    text-decoration: underline;
+}
+
+.icon
+{
+    display: inline-block;
+    font-size: 6em;
+    margin: 0 10px;
+    opacity: 0.8;
+    color: #000;
+}
+
+.icon:hover
+{
+    opacity: 1.0;
+    color: #08b;
+}
+
+table {
+	width: 100%;
+	text-align: center;
+    border-collapse: collapse;
+	margin-bottom: 5px;
+}
+
+#header
+{
+    background-color: #f0faff;
+}
+
+#masthead
+{
+    width: 800px;
+    margin: auto;
+    padding: 10px;
+}
+
+#masthead #title, #tagline
+{
+    margin: auto;
+    text-align: center;
+}
+
+#masthead #title h1, h1 a
+{
+    font-weight: normal;
+    font-size: 55px;
+    text-decoration: none;
+    color: #000;
+}
+
+#masthead #title h1 a:hover
+{
+    text-decoration: none;
+    color: #000;
+}
+
+#masthead #tagline h3
+{
+    font-weight: normal;
+    font-size: 18pt;
+}
+
+#masthead .menu
+{
+    margin-top: 25px;
+}
+
+#masthead ul {
+    text-align: center;
+    padding: 0;
+    margin-bottom: 12px;
+}
+
+#masthead li {
+	font-family:"Dosis","Trebuchet MS",Helvetica,Arial;
+	list-style: none;
+	display: inline;
+	font-size: 20pt;
+	line-height: 14px;
+	text-decoration: none;
+	padding: 0 5px 3px 5px;
+	margin: 0 30px 0 30px;
+}
+
+#masthead .current_page_item a, #masthead .current_page_parent > a {
+    font-weight: bold;
+    color: #000;
+}
+
+#masthead li a, table a {
+    color: #777;
+	text-decoration: none;
+}
+
+#masthead li a:hover, table a:hover {
+    text-decoration: none;
+    border: none;
+    color: #000;
+}
+
+#masthead {
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+#masthead span {
+	font-weight: bold;
+}
+
+#footer #site-info
+{
+    width: 820px;
+    margin: auto;
+    padding: 10px;
+}
+
+#footer #social
+{
+    float: right;
+}
+
+#footer #social .icon
+{
+    display: inline-block;
+    font-size: 2em;
+    margin-left: 3px;
+    margin-right: 0;
+    opacity: 0.5;
+    color: #000;
+}
+
+#footer #social .icon:hover
+{
+    opacity: 1.0;
+}
+
+.wp-caption
+{
+    display: inline-block;
+}
+
+img.alignleft
+{
+    float: left;
+    margin: 10px;
+}
+
+img.alignright
+{
+    float: right;
+    margin: 10px;
+}
+
+img.alignnone
+{
+    margin: 10px;
+}
+
+.project_entry
+{
+    display: inline-block;
+    vertical-align: top;
+    width: 250px;
+    height: 250px;
+    margin: 10px;
+    overflow: hidden;
+    background-color: #fff;
+    position: relative;
+}
+
+.project_entry .project_thumb
+{
+    width: 250px;
+    height: 250px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    margin: 0 auto;
+    display: block;
+    float: left;
+    z-index: 5;
+    position: relative;
+}
+
+.project_entry:hover .caption
+{
+    transform: translateY(-50px);
+    -webkit-transform: translateY(-50px);
+    -moz-transform: translateY(-50px);
+    -ms-transform: translateY(-50px);
+    -o-transform: translateY(-50px);
+}
+
+.project_entry:hover .caption:hover
+{
+    transform: translateY(-250px);
+    -webkit-transform: translateY(-250px);
+    -moz-transform: translateY(-250px);
+    -ms-transform: translateY(-250px);
+    -o-transform: translateY(-250px);
+}
+
+.project_entry .caption
+{
+    display: table;
+    text-align: left;
+    position: absolute;
+    word-wrap: normal;
+    width: 230px;
+    height: 220px;
+    top: 250px;
+    z-index: 10;
+    color: black;
+    font-size: 10.5pt;
+    padding: 15px 10px;
+    line-height: 22px;
+    background-color: rgba(255, 255, 255, 0.9);
+    transition: all 0.3s;
+}
+
+.project_entry .caption span
+{
+    display: table-cell;
+    vertical-align: middle;
+    width: 250px;
+    word-wrap: normal;
+    line-height: 22px;
+}
+
+.project_entry .caption h4
+{
+    margin: 0;
+    text-align: center;
+    font-size: 13pt;
+}
+
+.project_entry .caption ul
+{
+    padding-left: 20px;
+}
+
+.project_entry a p
+{
+    margin: 0;
+}
+
+.wp-caption
+{
+    vertical-align: top;
+}
