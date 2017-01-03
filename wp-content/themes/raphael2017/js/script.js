@@ -36,6 +36,8 @@ $( document ).ready(function()
                 $('#close').removeClass('fixed');
                 $('#header').css('right', '');
                 $('#project-page').animate({top: '100vh'}, 300, function(){
+                    pageOpen = false;
+                    document.title = 'Raphael Chang';
                     $('#loading').css('display', 'none');
                     $('#page-content').text('');
                     $('#project-page').removeClass('show');
@@ -72,6 +74,7 @@ $( document ).ready(function()
                         $('#header').css('right', scrollbarWidth);
                         $('html').addClass('hidescrollbar');
                         $('#loading').css('display', 'none');
+                        document.title = data[0].title.rendered + ' | Raphael Chang';
                         $('#page-content').text('');
                         $('#page-content').append('<h1>' + data[0].title.rendered + '</h1>');
                         $('#page-content').append(data[0].content.rendered);
@@ -87,13 +90,13 @@ $( document ).ready(function()
                     $('#page-content').text('');
                     $('#loading').css('display', 'block');
                     $('#project-page').addClass('show');
-                    pageOpen = true;
                     $.getJSON("wp-json/wp/v2/pages?slug=" + page, function( data ) {
                         if (pageOpen)
                         {
                             $('#project-page').addClass('show');
                             $('html').addClass('hidescrollbar');
                             $('#loading').css('display', 'none');
+                            document.title = data[0].title.rendered + ' | Raphael Chang';
                             $('#page-content').text('');
                             $('#page-content').append('<h1>' + data[0].title.rendered + '</h1>');
                             $('#page-content').append(data[0].content.rendered);
