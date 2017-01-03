@@ -256,7 +256,7 @@ hr
     background: none;
     color: #6df;
     border: 2px solid #6df;
-    border-radius: 999px;
+    border-radius: 10px;
     font-weight: 700;
     font-size: 13pt;
     padding: 6px 15px;
@@ -313,11 +313,17 @@ hr
     top: 100vh;
     z-index: 100;
     overflow-y: auto;
+    display: none;
 }
 
 #project-page.hidescrollbar
 {
     overflow-y: hidden;
+}
+
+#project-page.show
+{
+    display: block;
 }
 
 #project-page #loading
@@ -530,7 +536,7 @@ img.alignnone
     -moz-transform: translateY(-50px);
     -ms-transform: translateY(-50px);
     -o-transform: translateY(-50px);
-    transition-timing-function: cubic-bezier(.36,.23,.69,1.56);
+    transition-timing-function: cubic-bezier(.36,.23,.69,1.55);
 }
 
 .project_entry:hover .caption:hover

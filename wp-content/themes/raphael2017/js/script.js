@@ -21,6 +21,10 @@ $( document ).ready(function()
             };
             fontsize();
             $(window).resize(fontsize);
+            $('.grid').masonry({
+                itemSelector: '.project_entry',
+                percentPosition: true
+            });
             var pageOpen = false;
             var scrolling = false;
             var closePage = function() {
@@ -34,6 +38,7 @@ $( document ).ready(function()
                 $('#project-page').animate({top: '100vh'}, 300, function(){
                     $('#loading').css('display', 'none');
                     $('#page-content').text('');
+                    $('#project-page').removeClass('show');
                 });
             };
             var openHandler = function() {
@@ -49,9 +54,11 @@ $( document ).ready(function()
             var openPage = function(page) {
                 if (pageOpen)
                     return;
+                $('#project-page').addClass('show');
                 $('#project-page').removeClass('hidescrollbar');
                 $('#project-page').animate({top: 0}, 300, function() {
                     $('#close').addClass('fixed');
+                    $('#project-page').addClass('show');
                 });
                 $('#page-content').text('');
                 $('#loading').css('display', 'block');
@@ -59,6 +66,7 @@ $( document ).ready(function()
                 $.getJSON("wp-json/wp/v2/pages?slug=" + page, function( data ) {
                     if (pageOpen)
                     {
+                        $('#project-page').addClass('show');
                         var scrollbarWidth = window.innerWidth - $('#project-page').innerWidth();
                         $('#close').css('right', 25 + scrollbarWidth);
                         $('#header').css('right', scrollbarWidth);
@@ -78,13 +86,12 @@ $( document ).ready(function()
                     $('#loading').css('display', 'none');
                     $('#page-content').text('');
                     $('#loading').css('display', 'block');
+                    $('#project-page').addClass('show');
                     pageOpen = true;
                     $.getJSON("wp-json/wp/v2/pages?slug=" + page, function( data ) {
                         if (pageOpen)
                         {
-                            var scrollbarWidth = window.innerWidth - $('#project-page').innerWidth();
-                            $('#header').css('right', scrollbarWidth);
-                            $('#close').css('right', 25 + scrollbarWidth);
+                            $('#project-page').addClass('show');
                             $('html').addClass('hidescrollbar');
                             $('#loading').css('display', 'none');
                             $('#page-content').text('');
