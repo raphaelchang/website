@@ -1,0 +1,23 @@
+{{!< default}}
+<div class="home_box" id="home">
+{{{data.home.content}}}
+</div>
+<div class="projects_container" id="projects">
+{{{data.projects.content}}}
+<div class="grid">
+{{# each data.projects_list }}
+<div class="project_entry{{#if doubleWidth}} grid_width2{{/if}}{{#if doubleHeight}} grid_height2{{/if}}">
+<a href="#projects/{{slug}}/"></p>
+<div class="project_thumb" style="background-image: url('{{thumbnail.url}}');"></div>
+<div class="caption">
+<h4{{#if smallTitle}} class="smaller"{{/if}}>{{title}}</h4>
+{{{description}}}
+</div>
+<p></a>
+</div>
+{{/each}}
+</div>
+</div>
+<div class="contact_box" id="contact">
+{{{data.contact.content}}}
+</div>
