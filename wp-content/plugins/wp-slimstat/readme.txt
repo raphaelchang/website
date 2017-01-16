@@ -5,7 +5,7 @@ Tags: analytics, statistics, counter, tracking, reports, wassup, geolocation, on
 Text Domain: wp-slimstat
 Requires at least: 3.8
 Tested up to: 4.7
-Stable tag: 4.4.5
+Stable tag: 4.5.1
 
 == Description ==
 [youtube https://www.youtube.com/watch?v=iJCtjxArq4U]
@@ -38,11 +38,11 @@ Slimstat is available in multiple languages: English, Belarusian ([UStarCash](ht
 
 = Requirements =
 * WordPress 3.8+
-* PHP 5.2+
+* PHP 5.2+ (or 5.5+ if you use the Browscap data file)
 * MySQL 5.0.3+
-* At least 15 MB of free web space
+* At least 20 MB of free web space
 * At least 5 MB of free DB space
-* At least 30 Mb of free PHP memory for the tracker (peak memory usage)
+* At least 32 Mb of free PHP memory for the tracker (peak memory usage)
 * IE9+ or any browser supporting HTML5, to access the reports
 
 == Installation ==
@@ -71,6 +71,22 @@ Our knowledge base is available on our [support center](http://docs.wp-slimstat.
 5. **Responsive layout** - Keep an eye on your reports on the go
 
 == Changelog ==
+
+= 4.5.1 =
+* [New] Slimstat is now looking for custom HTTP headers like [CF-Connecting-IP](https://support.cloudflare.com/hc/en-us/articles/200170986-How-does-CloudFlare-handle-HTTP-Request-headers-) to determine your visitors' originating IP address when your website is behind reverse proxies like CloudFlare.
+* [New] By default, when the domain of the referrer for a given page view is the same as the current site, that information is not tracked to save space in the database. However, if you are running a multisite network with subfolders, you might need to track same-domain referrers from one site to another, as they are technically "separate" websites. A new option under Settings > Tracker was added to handle this situation (thank you, [chenryahts](https://wordpress.org/support/topic/referer-not-recorded-from-other-sites-in-same-multisite/)).
+* [Fix] A type in checking the PHP version was preventing some users from installing our new Browscap library.
+* [Fix] PHP warning of undefined offset in one of the reports when the database was empty.
+* [Fix] In some specific cases a function used to unzip the Browscap Library on the user's server was not defined (thank you, [victor50g, gdevic and others](https://wordpress.org/support/topic/white-screen-of-death-when-publishing-post/))
+* [Fix] A few users pointed out that using file_get_contents might not be ideal, if allow_url_fopen is turned off in PHP. Per [Per Dennis' suggestion](https://wordpress.org/support/topic/file_get_contents-problem-since-version-4-5/) that call was replaced with wp_remote_get. Thank you for your help!
+
+= 4.5 =
+* [Note] Can you believe it? It looks like it was yesterday that we were celebrating the new year with our loved ones, and here we are, getting ready to welcome 2017. For our team, 2016 was a very intense year: we celebrated Slimstat's 10th anniversary, released new add-ons, started community outreach initiatives on Facebook and on our website, implemented new features and much more. Now, with a smaller team, we need to find creative ways to keep providing the stellar support service which many of you appreciate so much in your reviews. For this reason, we need to slighly increase the price of our add-ons starting in early 2017. Don't worry, it will still be a very competitive and reasonable price point, affordable even for those of you who cannot spend hundreds of dollars on their website. However we encourage you to take advantage of these few remaining weeks and [buy our add-ons today](https://www.wp-slimstat.com/addons/), before prices go up in January!
+* [New] You spoke up, we listened. The third-party Browscap data file has been increasing in size over time, forcing some users to uninstall it from their server because it was causing issues with the PHP memory limit set by the administrator. Although Slimstat provides a built-in heuristic function as a workaround for this issue, we wanted to find a better solution. Replacing the obsolete Browscap parser with the [shiny new version 3.0](https://github.com/browscap/browscap-php), our tests show a big improvement in terms of performance and use of resources. The only caveat is that the new parser **requires PHP 5.5 or newer**, so please make sure your server environment is compatible before enabling this feature.
+* [Update] Minor touches to the look and feel to make our admin color scheme more consistent throughout the various screens.
+* [Fix] Uninstall procedure was not deleting the Browscap and MaxMind data files from the server.
+* [Fix] Our release highlights, which are usually shown after updating to the latest version, were not disappearing when clicking on the corresponding button.
+* [Fix] PHP warning being returned under certain circumstances (thank you, [Sasa and computershowtopro](https://wordpress.org/support/topic/you-need-to-change-line-340-341-in-the-plugin/#post-8591529)).
 
 = 4.4.5 =
 * [New] We separated errors and notices in the log, to avoid confusion when users were trying to troubleshoot issues with the tracker.

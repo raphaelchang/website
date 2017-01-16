@@ -7,7 +7,7 @@ $( document ).ready(function()
             fontsize = function () {
                     var margin = parseInt(window.getComputedStyle(document.documentElement).getPropertyValue("--entry-margin"), 10);
                     var gridWidth = $(".grid").innerWidth();
-                    var numColumns = Math.floor(gridWidth / (230 + 2 * margin));
+                    var numColumns = Math.min(5, Math.floor(gridWidth / (230 + 2 * margin)));
                     var colPercentage = 1 / numColumns * 100;
                     document.documentElement.style.setProperty("--entry-size", "calc(" + colPercentage + "% - var(--entry-margin) * 2)");
                     document.documentElement.style.setProperty("--entry-size-double", "calc(" + colPercentage * 2 + "% - var(--entry-margin) * 2)");
@@ -119,6 +119,7 @@ $( document ).ready(function()
                     openPage(list[1]);
                 }
             }
+            var easeMode = "easeInOutCubic";
             $(window).bind('hashchange', function (event) {
                 event.preventDefault();
                 var list = window.location.hash.split("/");
@@ -145,7 +146,7 @@ $( document ).ready(function()
                     }
                     $('html, body').animate({
                         scrollTop: $(hash).offset().top - offset
-                    }, 500);
+                    }, 600, easeMode);
                 }
             });
             var findMiddleElement = (function(docElm){
@@ -222,7 +223,7 @@ $( document ).ready(function()
                 scrolling = true;
                 $('html, body').animate({
                     scrollTop: $(id).offset().top - offset
-                }, 500, function(){
+                }, 600, easeMode, function(){
                     scrolling = false;
                 findMiddleElement();
                 });

@@ -11,7 +11,7 @@ class wp_slimstat_admin {
 	 * Init -- Sets things up.
 	 */
 	public static function init() {
-		self::$admin_notice = "The Browscap Project recently released a new version of their data file. Leveraging the new autoupdate feature introduced a few weeks ago, we will publish our optimized version on our repository. Even those who are not ready to upgrade to the latest version of Slimstat, should receive the update in the next few days. Please let us know if you experience any issues by contacting our support team.";
+		self::$admin_notice = "Just a quick reminder to take advantage of our current promotion before it ends on January 15: use coupon <code>HAPPY2017</code> to get 17% off any <a href='https://www.wp-slimstat.com/addons/' target='_blank'>add-on purchase on our online store</a>! Prices will go up at the end of this month, so don't wait until the last minute.";
 		self::$admin_notice .= '<br/><br/><a id="slimstat-hide-admin-notice" href="#" class="button-secondary">Got it, thanks</a>';
 
 		// Load language files
@@ -91,16 +91,16 @@ class wp_slimstat_admin {
 		self::$config_url = 'admin.php?page=slimconfig&amp;tab=';
 
 		// WPMU - New blog created
-		$active_sitewide_plugins = get_site_option('active_sitewide_plugins');
-		if (!empty($active_sitewide_plugins['wp-slimstat/wp-slimstat.php'])){
-			add_action('wpmu_new_blog', array(__CLASS__, 'new_blog'));
+		$active_sitewide_plugins = get_site_option( 'active_sitewide_plugins' );
+		if ( !empty( $active_sitewide_plugins[ 'wp-slimstat/wp-slimstat.php' ] ) ) {
+			add_action( 'wpmu_new_blog', array( __CLASS__, 'new_blog' ) );
 		}
 
 		// WPMU - Blog Deleted
-		add_filter('wpmu_drop_tables', array(__CLASS__, 'drop_tables'), 10, 2);
+		add_filter( 'wpmu_drop_tables', array( __CLASS__, 'drop_tables' ), 10, 2 );
 
 		// Screen options: hide/show panels to customize your view
-		add_filter('screen_settings', array(__CLASS__, 'screen_settings'), 10, 2);
+		add_filter( 'screen_settings', array( __CLASS__, 'screen_settings' ), 10, 2 );
 
 		// Display a notice that hightlights this version's features
 		if ( !empty( $_GET[ 'page' ] ) && strpos( $_GET[ 'page' ], 'slimview' ) !== false ) {
@@ -120,29 +120,29 @@ class wp_slimstat_admin {
 			add_action( 'admin_bar_menu', array( __CLASS__, 'wp_slimstat_adminbar' ), 100 );
 		}
 
-		if (function_exists('is_network_admin') && !is_network_admin()){
+		if ( function_exists( 'is_network_admin' ) && !is_network_admin() ) {
 			// Add the appropriate entries to the admin menu, if this user can view/admin WP SlimStats
-			add_action('admin_menu', array(__CLASS__, 'wp_slimstat_add_view_menu'));
-			add_action('admin_menu', array(__CLASS__, 'wp_slimstat_add_config_menu'));
+			add_action( 'admin_menu', array( __CLASS__, 'wp_slimstat_add_view_menu' ) );
+			add_action( 'admin_menu', array( __CLASS__, 'wp_slimstat_add_config_menu' ) );
 
 			// Display the column in the Edit Posts / Pages screen
 			if ( wp_slimstat::$settings[ 'add_posts_column' ] == 'yes' ) {
 				$post_types = get_post_types( array( 'public' => true, 'show_ui'  => true ), 'names' );
-				include_once( dirname(__FILE__) . '/view/wp-slimstat-reports.php' );
-				include_once( dirname(__FILE__) . '/view/wp-slimstat-db.php' );
+				include_once( dirname( __FILE__ ) . '/view/wp-slimstat-reports.php' );
+				include_once( dirname( __FILE__ ) . '/view/wp-slimstat-db.php' );
 
 				foreach ( $post_types as $a_post_type ) {
-					add_filter("manage_{$a_post_type}_posts_columns", array(__CLASS__, 'add_column_header'));
-					add_action("manage_{$a_post_type}_posts_custom_column", array(__CLASS__, 'add_post_column'), 10, 2);
+					add_filter( "manage_{$a_post_type}_posts_columns", array( __CLASS__, 'add_column_header' ) );
+					add_action( "manage_{$a_post_type}_posts_custom_column", array( __CLASS__, 'add_post_column' ), 10, 2 );
 				}
 
 				if ( strpos( $_SERVER['REQUEST_URI'], 'edit.php' ) !== false ) {
-					add_action('admin_enqueue_scripts', array(__CLASS__, 'wp_slimstat_stylesheet'));
+					add_action( 'admin_enqueue_scripts', array( __CLASS__, 'wp_slimstat_stylesheet' ) );
 				}
 			}
 			
 			// Add some inline CSS to customize the icon associated to SlimStat in the sidebar
-			add_action('admin_enqueue_scripts', array(__CLASS__, 'wp_slimstat_stylesheet_icon'));
+			add_action( 'admin_enqueue_scripts', array( __CLASS__, 'wp_slimstat_stylesheet_icon' ) );
 
 			// Update the table structure and options, if needed
 			if ( !empty( wp_slimstat::$settings[ 'version' ] ) && wp_slimstat::$settings[ 'version' ] != wp_slimstat::$version ) {
@@ -654,6 +654,18 @@ class wp_slimstat_admin {
 		}
 		// --- END: Updates for version 4.4.5 ---
 
+		// --- Updates for version 4.5 ---
+		if ( version_compare( wp_slimstat::$settings[ 'version' ], '4.5', '<' ) ) {
+			// Download the new Browscap data structure, if the old one was installed
+			slim_browser::update_browscap_database( true );
+
+			// Clean up after yourself, son!
+			if ( file_exists( wp_slimstat::$upload_dir . '/browscap-db.php' ) ) {
+				@unlink( wp_slimstat::$upload_dir . '/browscap-db.php' );
+			}
+		}
+		// --- END: Updates for version 4.5 ---
+
 		// Now we can update the version stored in the database
 		wp_slimstat::$settings[ 'version' ] = wp_slimstat::$version;
 
@@ -740,9 +752,9 @@ class wp_slimstat_admin {
 	// end wp_slimstat_userdefined_stylesheet
 
 	public static function wp_slimstat_enqueue_scripts( $_hook = '' ) {
-		wp_enqueue_script('dashboard');
-		wp_enqueue_script('jquery-ui-datepicker');
-		wp_enqueue_script('slimstat_admin', plugins_url('/admin/js/slimstat.admin.js', dirname(__FILE__)), array('jquery-ui-dialog'), null, false);
+		wp_enqueue_script( 'dashboard' );
+		wp_enqueue_script( 'jquery-ui-datepicker' );
+		wp_enqueue_script( 'slimstat_admin', plugins_url( '/admin/js/slimstat.admin.js', dirname( __FILE__ ) ), array( 'jquery-ui-dialog' ), null, false );
 
 		// Pass some information to Javascript
 		$params = array(
@@ -754,7 +766,7 @@ class wp_slimstat_admin {
 			'text_direction' => $GLOBALS[ 'wp_locale' ]->text_direction,
 			'use_slimscroll' => !empty( wp_slimstat::$settings[ 'use_slimscroll' ] ) ? wp_slimstat::$settings[ 'use_slimscroll' ] : 'yes'
 		);
-		wp_localize_script('slimstat_admin', 'SlimStatAdminParams', $params);
+		wp_localize_script( 'slimstat_admin', 'SlimStatAdminParams', $params );
 	}
 	
 	// public static function wp_slimstat_enqueue_config_scripts(){
@@ -797,9 +809,9 @@ class wp_slimstat_admin {
 
 		// Load styles and Javascript needed to make the reports look nice and interactive
 		foreach($new_entry as $a_entry){
-			add_action('load-'.$a_entry, array(__CLASS__, 'wp_slimstat_stylesheet'));
-			add_action('load-'.$a_entry, array(__CLASS__, 'wp_slimstat_enqueue_scripts'));
-			add_action('load-'.$a_entry, array(__CLASS__, 'contextual_help'));
+			add_action( 'load-' . $a_entry, array( __CLASS__, 'wp_slimstat_stylesheet' ) );
+			add_action( 'load-' . $a_entry, array( __CLASS__, 'wp_slimstat_enqueue_scripts' ) );
+			add_action( 'load-' . $a_entry, array( __CLASS__, 'contextual_help' ) );
 		}
 
 		return $_s;
@@ -894,32 +906,32 @@ class wp_slimstat_admin {
 	/**
 	 * Includes the appropriate panel to view the stats
 	 */
-	public static function wp_slimstat_include_view(){
-		include(dirname(__FILE__).'/view/index.php');
+	public static function wp_slimstat_include_view() {
+		include( dirname( __FILE__ ) . '/view/index.php' );
 	}
 	// end wp_slimstat_include_view
 
 	/**
 	 * Includes the screen to arrange the reports
 	 */
-	public static function wp_slimstat_include_layout(){
-		include(dirname(__FILE__).'/view/layout.php');
+	public static function wp_slimstat_include_layout() {
+		include( dirname( __FILE__ ) . '/view/layout.php' );
 	}
 	// end wp_slimstat_include_addons
 
 	/**
 	 * Includes the screen to manage add-ons
 	 */
-	public static function wp_slimstat_include_addons(){
-		include(dirname(__FILE__).'/view/addons.php');
+	public static function wp_slimstat_include_addons() {
+		include( dirname( __FILE__ ) . '/view/addons.php' );
 	}
 	// end wp_slimstat_include_addons
 
 	/**
 	 * Includes the appropriate panel to configure Slimstat
 	 */
-	public static function wp_slimstat_include_config(){
-		include(dirname(__FILE__).'/config/index.php');
+	public static function wp_slimstat_include_config() {
+		include( dirname( __FILE__ ) . '/config/index.php' );
 	}
 	// end wp_slimstat_include_config
 
@@ -1022,8 +1034,8 @@ class wp_slimstat_admin {
 	/**
 	 * Displays an alert message
 	 */
-	public static function show_alert_message($_message = '', $_type = 'update'){
-		echo "<div id='slimstat-message' class='$_type'><p>$_message</p></div>";
+	public static function show_alert_message( $_message = '', $_type = 'wp-ui-highlight' ){
+		echo "<div id='slimstat-message' class='$_type below-h2'><p>$_message</p></div>";
 	}
 
 	/**
@@ -1077,23 +1089,23 @@ class wp_slimstat_admin {
 	 * Handles the Ajax requests to load, save or delete existing filters
 	 */
 	public static function manage_filters(){
-		check_ajax_referer('meta-box-order', 'security');
+		check_ajax_referer( 'meta-box-order', 'security' );
 
-		include_once(dirname(__FILE__).'/view/wp-slimstat-reports.php');
+		include_once( dirname( __FILE__ ) . '/view/wp-slimstat-reports.php' );
 		wp_slimstat_reports::init();
 
 		$saved_filters = get_option( 'slimstat_filters', array() );
 		$filter_found = 0;
 
-		switch($_POST['type']){
+		switch( $_POST[ 'type' ] ) {
 			case 'save':
-				$new_filter = unserialize(stripslashes_deep($_POST['filter_array']));
+				$new_filter = unserialize( stripslashes_deep( $_POST[ 'filter_array' ] ) );
 
 				// Check if this filter is already saved
-				foreach ($saved_filters as $a_saved_filter){
+				foreach ( $saved_filters as $a_saved_filter ) {
 					$filter_found = 0;
 
-					if (count($a_saved_filter) != count($new_filter) || count(array_intersect_key($a_saved_filter, $new_filter)) != count($new_filter)){
+					if ( count( $a_saved_filter ) != count( $new_filter ) || count( array_intersect_key( $a_saved_filter, $new_filter ) ) != count( $new_filter ) ) {
 						$filter_found = 1;
 						continue;
 					}
@@ -1333,7 +1345,7 @@ class wp_slimstat_admin {
 		$screen->add_help_tab(
 			array(
 				'id' => 'wp-slimstat-definitions',
-				'title' => __('Definitions','wp-slimstat'),
+				'title' => __( 'Definitions', 'wp-slimstat' ),
 				'content' => '
 <ul>
 <li><b>'.__('Pageview','wp-slimstat').'</b>: '.__('A request to load a single HTML file ("page"). This should be contrasted with a "hit", which refers to a request for any file from a web server. Slimstat logs a pageview each time the tracking code is executed','wp-slimstat').'</li>

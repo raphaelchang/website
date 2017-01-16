@@ -379,7 +379,7 @@ hr
     top: 77px;
 }
 
-.projects_container a
+.projects_container a, #project-page a
 {
     color: #08c;
 }
