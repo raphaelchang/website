@@ -1,6 +1,5 @@
 $( document ).ready(function()
         {
-            var sessionId = '';
             $('.grid').masonry({
                 itemSelector: '.project_entry',
                 percentPosition: true
@@ -26,32 +25,6 @@ $( document ).ready(function()
                 itemSelector: '.project_entry',
                 percentPosition: true
             });
-            $.post("api/analytics/session/create", {ip: '', time: '', referrer: document.referrer}, function(data)
-                {
-                    sessionId = data.post._id;
-                    if(window.location.hash) {
-                        var list = window.location.hash.split("/");
-                        hash = list[0];
-                        var offset = 0;
-                        if (hash == '#projects')
-                        {
-                            offset = $('#header').outerHeight();
-                        }
-                        $('html, body').scrollTop($(hash).offset().top - offset);
-                        if (hash == "#projects" && list.length >= 2 && list[1] != '')
-                        {
-                            openPage(list[1]);
-                        }
-                        else
-                        {
-                            $.post("api/analytics/page-visit/create", {sessionId: sessionId, time: '', pageSlug: (window.location.hash == '' ? '#home' : window.location.hash)});
-                        }
-                    }
-                    else
-                    {
-                        $.post("api/analytics/page-visit/create", {sessionId: sessionId, time: '', pageSlug: '#home'});
-                    }
-                });
             var pageOpen = false;
             var scrolling = false;
             var closePage = function() {
@@ -78,7 +51,6 @@ $( document ).ready(function()
             };
             var closeHandler = function() {
                 history.pushState({}, '', '#');
-                $.post("api/analytics/page-visit/create", {sessionId: sessionId, time: '', pageSlug: (window.location.hash == '' ? '#home' : window.location.hash)});
                 closePage();
             };
             var openPage = function(page) {
@@ -93,7 +65,7 @@ $( document ).ready(function()
                 $('#page-content').text('');
                 $('#loading').css('display', 'block');
                 pageOpen = true;
-                $.getJSON("api/page/" + page + "?sessionId=" + sessionId + "&hash=" + window.location.hash.replace('#', '%23'), function( data ) {
+                $.getJSON("wp-json/wp/v2/pages?slug=" + page, function( data ) {
                     if (pageOpen)
                     {
                         $('#project-page').addClass('show');
@@ -102,10 +74,10 @@ $( document ).ready(function()
                         $('#header').css('right', scrollbarWidth);
                         $('html').addClass('hidescrollbar');
                         $('#loading').css('display', 'none');
-                        document.title = data.page.title + ' | Raphael Chang';
+                        document.title = data[0].title.rendered + ' | Raphael Chang';
                         $('#page-content').text('');
-                        $('#page-content').append('<h1>' + data.page.title + '</h1>');
-                        $('#page-content').append(data.page.content);
+                        $('#page-content').append('<h1>' + data[0].title.rendered + '</h1>');
+                        $('#page-content').append(data[0].content.rendered);
                         $('#page-content').animate({top: 0, opacity: 1.0}, 200);
                     }
                 });
@@ -118,21 +90,36 @@ $( document ).ready(function()
                     $('#page-content').text('');
                     $('#loading').css('display', 'block');
                     $('#project-page').addClass('show');
-                    $.getJSON("api/page/" + page + "?sessionId=" + sessionId + "&hash=" + window.location.hash.replace('#', '%23'), function( data ) {
+                    $.getJSON("wp-json/wp/v2/pages?slug=" + page, function( data ) {
                         if (pageOpen)
                         {
                             $('#project-page').addClass('show');
                             $('html').addClass('hidescrollbar');
                             $('#loading').css('display', 'none');
-                            document.title = data.page.title + ' | Raphael Chang';
+                            document.title = data[0].title.rendered + ' | Raphael Chang';
                             $('#page-content').text('');
-                            $('#page-content').append('<h1>' + data.page.title + '</h1>');
-                            $('#page-content').append(data.page.content);
+                            $('#page-content').append('<h1>' + data[0].title.rendered + '</h1>');
+                            $('#page-content').append(data[0].content.rendered);
                             $('#page-content').animate({top: 0, opacity: 1.0}, 200);
                         }
                     });
                 });
             };
+            if(window.location.hash) {
+                var list = window.location.hash.split("/");
+                hash = list[0];
+                var offset = 0;
+                if (hash == '#projects')
+                {
+                    offset = $('#header').outerHeight();
+                }
+                $('html, body').scrollTop($(hash).offset().top - offset);
+                if (hash == "#projects" && list.length >= 2 && list[1] != '')
+                {
+                    openPage(list[1]);
+                }
+            }
+            var easeMode = "easeInOutCubic";
             $(window).bind('hashchange', function (event) {
                 event.preventDefault();
                 var list = window.location.hash.split("/");
@@ -148,12 +135,10 @@ $( document ).ready(function()
                 }
                 else if (pageOpen)
                 {
-                    $.post("api/analytics/page-visit/create", {sessionId: sessionId, time: '', pageSlug: (window.location.hash == '' ? '#home' : window.location.hash)});
                     closePage();
                 }
                 else
                 {
-                    $.post("api/analytics/page-visit/create", {sessionId: sessionId, time: '', pageSlug: (window.location.hash == '' ? '#home' : window.location.hash)});
                     var offset = 0;
                     if (hash == '#projects')
                     {
@@ -161,7 +146,7 @@ $( document ).ready(function()
                     }
                     $('html, body').animate({
                         scrollTop: $(hash).offset().top - offset
-                    }, 500);
+                    }, 600, easeMode);
                 }
             });
             var findMiddleElement = (function(docElm){
@@ -230,7 +215,6 @@ $( document ).ready(function()
                 }
                 var id = $.attr(this, 'href');
                 history.pushState({}, '', id);
-                $.post("api/analytics/page-visit/create", {sessionId: sessionId, time: '', pageSlug: (window.location.hash == '' ? '#home' : window.location.hash)});
                 var offset = 0;
                 if (id == '#projects')
                 {
@@ -239,7 +223,7 @@ $( document ).ready(function()
                 scrolling = true;
                 $('html, body').animate({
                     scrollTop: $(id).offset().top - offset
-                }, 500, function(){
+                }, 600, easeMode, function(){
                     scrolling = false;
                 findMiddleElement();
                 });
