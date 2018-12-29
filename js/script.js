@@ -1,4 +1,10 @@
 $(document).ready(function() {
+    $('.no-webp .project_thumb').each(function(index,element) {
+        element = $(element);
+        var background = element.css('background-image');
+        background = background.replace('.webp','.png');
+        element.css('background-image', background);
+    });
     $("#loader").show();
 });
 $( window ).on('load', function()
