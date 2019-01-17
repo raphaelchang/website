@@ -1,11 +1,15 @@
 $(document).ready(function() {
-    $('.no-webp .project_thumb').each(function(index,element) {
-        element = $(element);
-        var background = element.css('background-image');
-        background = background.replace('.webp','.png');
-        element.css('background-image', background);
-    });
     $("#loader").show();
+});
+Modernizr.on('webp', function( result ) {
+    if (!result) {
+	$('.no-webp .project_thumb').each(function(index,element) {
+	    element = $(element);
+	    var background = element.css('background-image');
+	    background = background.replace('.webp','.png');
+	    element.css('background-image', background);
+	});
+    }
 });
 $( window ).on('load', function()
         {

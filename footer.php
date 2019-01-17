@@ -1,6 +1,7 @@
- 
+<div id="footerwrap">
 <div id="footer">
 &copy; 2019 Raphael Chang
+</div>
 </div>
     </div><!-- #main -->
 </div><!-- #wrapper -->

@@ -96,7 +96,9 @@ hr
 }
 
 #container {
-    margin: 0 50px;
+    margin: 0 auto;
+    padding: 0 50px;
+    max-width: 2000px;
 }
 
 #main {
@@ -287,6 +289,12 @@ img.alignnone
     line-height: 28px;
 }
 
+#footerwrap
+{
+    max-width: 2100px;
+    margin: 0 auto;
+}
+
 #footer
 {
     margin-bottom: 20px;
@@ -324,17 +332,25 @@ img.alignnone
     background: none;
 }
 
+#headerwrap
+{
+    margin: 0 auto;
+    max-width: 2100px;
+}
+
 #header
 {
-    background: url('https://raphaelchang.com/wp-content/uploads/thumbnails/RC.png') 50px center no-repeat;
+    margin: 0 50px;
+    background: url('https://raphaelchang.com/wp-content/uploads/thumbnails/RC.png') 0px center no-repeat;
     background-size: 70px;
     height: 100px;
 }
 
 #header #links
 {
-    position: absolute;
-    right: 45px;
+    position: relative;
+    float: right;
+    right: -5px;
     top: 35px;
     display: inline-block;
 }
