@@ -42,9 +42,10 @@
     <div id="headerwrap">
         <div id="header">
             <div id="links">
-            <a href="http://www.linkedin.com/pub/raphael-chang/5a/832/272"><span class="fa-stack icon"><i class="fa fa-circle-thin fa-stack-2x"></i><i class="fa fa-linkedin fa-stack-1x"></i></span></a>
-            <a href="http://github.com/raphaelchang"><span class="fa-stack icon"><i class="fa fa-circle-thin fa-stack-2x"></i><i class="fa fa-github fa-stack-1x"></i></span></a>
-            <a href="http://www.facebook.com/RaphaelChang1227"><span class="fa-stack icon"><i class="fa fa-circle-thin fa-stack-2x"></i><i class="fa fa-facebook fa-stack-1x"></i></span></a>
+            <a href="https://www.linkedin.com/pub/raphael-chang/5a/832/272"><span class="fa-stack icon"><i class="fa fa-circle-thin fa-stack-2x"></i><i class="fa fa-linkedin fa-stack-1x"></i></span></a>
+            <a href="https://github.com/raphaelchang"><span class="fa-stack icon"><i class="fa fa-circle-thin fa-stack-2x"></i><i class="fa fa-github fa-stack-1x"></i></span></a>
+            <a href="https://www.facebook.com/RaphaelChang1227"><span class="fa-stack icon"><i class="fa fa-circle-thin fa-stack-2x"></i><i class="fa fa-facebook fa-stack-1x"></i></span></a>
+            <a href="https://www.instagram.com/raphaelchang1227/"><span class="fa-stack icon"><i class="fa fa-instagram fa-stack-2x"></i></span></a>
             </div>
         </div>
     </div>
